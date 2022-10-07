@@ -31,7 +31,9 @@ mix.webpackConfig({
  		}
     ]},
     plugins: [
-        new SvgSpritemapPlugin('node_modules/@tiny-components/plain-ui/src/icons/mono-icons/svg/*.svg', {
+        new SvgSpritemapPlugin([
+                'node_modules/@tiny-components/plain-ui/src/icons/mono-icons/svg/*.svg'
+            ], {
             output: {
                 filename: 'symbol-defs.svg',
                 chunk: {
