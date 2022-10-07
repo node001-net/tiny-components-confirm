@@ -1,0 +1,9 @@
+@import
+    '../node_modules/@tiny-components/plain-ui/src/scss/plain-ui';
+
+.tiny-modal {
+    .modal__footer {
+        display: flex;
+        justify-content: space-between;
+    }
+}

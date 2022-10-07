@@ -1,0 +1,149 @@
+<tiny-confirm>
+    <div class={ getModalClasses() }>
+        <div class="modal__inner">
+            <div class="modal__title center">
+                <svg class="icon fill-text-contrast">
+                    <use xlink:href="/symbol-defs.svg#icon-circle-warning" />
+                </svg>
+                <div if={ state.title }>
+                    { state.title }
+                </div>
+            </div>
+            <div class="modal__body center" if={ state.content }>
+                { state.content }
+            </div>
+            <div class="modal__footer">
+                <button class="button button--outline button--danger" type="button" onclick={ () => { handleCancel() }}>
+                    <svg class="icon fill-danger">
+                        <use xlink:href="/symbol-defs.svg#icon-close" />
+                    </svg>
+                </button>
+                <button class="button button--outline button--success" type="button" onclick={ () => { handleConfirm() }}>
+                    <svg class="icon fill-success">
+                        <use xlink:href="/symbol-defs.svg#icon-check" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        import store from './store.js'
+
+        /**
+         *  tiny-confirm
+         *
+         *  @author Björn Hase
+         *  @license http://opensource.org/licenses/MIT The MIT License
+         *  @link https://gitea.node001.net/tiny-components/confirm
+         *
+         */
+
+        export default {
+
+            state: {
+                isOpen: false,
+                transitionClass: false,
+                content: null
+            },
+
+            /**
+             *  handle after component is mounted
+             *
+             */
+            onMounted() {
+
+                // if store trigger open
+                store.on('open', (data) => {
+                    this.open(data)
+                })
+
+                // adding event to remove transitionClass after animation
+                this.root.addEventListener('transitionend', (event) => {
+                    this.state.transitionClass = false
+                    this.update()
+                })
+            },
+
+            /**
+             *  open confirm, add title and content
+             *
+             *
+             *  @param {object} data
+             *
+             */
+            open(data) {
+                this.state.transitionClass = 'modal-wrap--transition-open'
+                this.state.isOpen = true
+
+                if (data.title) {
+                    this.state.title = data.title
+                }
+
+                if (data.content) {
+                    this.state.content = data.content
+                }
+
+                this.update()
+            },
+
+            /**
+             *  close modal and remove data
+             *
+             *
+             */
+            close() {
+                this.state.transitionClass = 'modal-wrap--transition-close'
+
+                this.state.isOpen = false
+                this.state.content = null
+
+                this.update()
+            },
+
+            /**
+             *  handle cancel, send cancel
+             *
+             *
+             */
+            handleCancel() {
+                store.trigger('cancel')
+                this.close()
+            },
+
+            /**
+             *  handle confirm, send confirm
+             *
+             *  @param  {object} event
+             *
+             */
+            handleConfirm() {
+                store.trigger('confirm')
+                this.close()
+            },
+
+            /**
+             *  getting css for modal
+             *
+             *
+             *  @return {string}
+             *
+             */
+            getModalClasses() {
+                const classes = [
+                    'tiny-modal modal'
+                ]
+
+                if (this.state.isOpen) {
+                    classes.push('modal--open')
+                }
+
+                if (this.state.transitionClass) {
+                    classes.push(this.state.transitionClass)
+                }
+
+                return classes.join(' ')
+            }
+        }
+    </script>
+</tiny-confirm>

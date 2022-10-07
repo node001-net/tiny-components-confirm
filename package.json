@@ -1,0 +1,24 @@
+{
+  "name": "@tiny-components/confirm",
+  "version": "0.1.0",
+  "description": "confirm or cancel",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:node001-net/tiny-components-confirm.git"
+  },
+  "author": "Björn Hase <me@herr-hase.wtf>",
+  "license": "MIT",
+  "dependencies": {
+    "@riotjs/observable": "^4.1.1",
+    "@tiny-components/plain-ui": "^0.6.0",
+    "riot": "^7.0.6"
+  },
+  "devDependencies": {
+    "@riotjs/webpack-loader": "^6.0.0",
+    "laravel-mix": "^6.0.43",
+    "laravel-mix-purgecss": "^6.0.0",
+    "sass": "^1.51.0",
+    "sass-loader": "^12.6.0",
+    "svg-spritemap-webpack-plugin": "^4.4.0"
+  }
+}

@@ -1,0 +1,79 @@
+<tiny-confirm>
+    <div>
+        <button class="button button--outline button--danger" type="button" onclick={ () => { handleOpen() }}>
+            <svg class="icon fill-danger m-right-3">
+                <use xlink:href="/symbol-defs.svg#icon-close" />
+            </svg>
+            Click me!
+        </button>
+
+        <div if={ state.hasConfirmed } class="color-success">
+            Ok!
+        </div>
+
+        <div if={ state.hasCanceled } class="color-danger">
+            Ok! But why?!
+        </div>
+    </div>
+    <script>
+
+        import store from './store.js'
+
+        /**
+         *  example-confirm
+         *
+         *  @author Björn Hase
+         *  @license http://opensource.org/licenses/MIT The MIT License
+         *  @link https://gitea.node001.net/tiny-components/confirm
+         *
+         */
+
+        export default {
+
+            state: {
+                hasConfirmed: false,
+                hasCanceled: false
+            },
+
+            /**
+             *  open confirm, add title and content
+             *
+             *
+             *  @param {object} data
+             *
+             */
+            handleOpen() {
+                store.trigger('open', {
+                    title: 'Question',
+                    content: 'Are you sure?'
+                })
+
+                // handle confirm from modal
+                store.confirm(() => {
+                    this.state.hasConfirmed = true
+                    this.update()
+
+                    setTimeout(() => {
+
+                        this.state.hasConfirmed = false
+                        this.update()
+
+                    }, 5000)
+                })
+
+                // handle cancel is optional
+                store.cancel(() => {
+                    this.state.hasCanceled = true
+                    this.update()
+
+                    setTimeout(() => {
+
+                        this.state.hasCanceled = false
+                        this.update()
+
+                    }, 5000)
+                })
+            },
+        }
+    </script>
+</tiny-confirm>
