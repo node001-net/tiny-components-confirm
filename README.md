@@ -4,6 +4,8 @@ Created with [Riot.js](https://riot.js.org) and using [Plain-UI](https://plain-u
 
 A small modal to confirm or cancel an Action.
 
+![demo](src/example.gif)
+
 ## Install
 
 ```
